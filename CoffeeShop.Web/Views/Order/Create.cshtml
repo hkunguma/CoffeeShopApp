@@ -1,0 +1,85 @@
+﻿@model CoffeeShop.BLL.Models.OrderModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create Order</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ClientId" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.ClientId, (IEnumerable<SelectListItem>)ViewBag.ClientList, "--Select--", new { @class = "form-control" })
+                        <span asp-validation-for="ClientId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrderDate" class="control-label"></label>
+                        <input asp-for="OrderDate" class="form-control" />
+                        <span asp-validation-for="OrderDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="AddItem" onclick="AddItem()" class="btn btn-default" />
+            <input type="button" value="DeleteNewRow" onclick="DeleteItem()" class="btn btn-default" />
+
+            <table class="table" id="orderDetailtbl">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+                        <th>@Html.DisplayNameFor(model => model.ItemDescription)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <input type="hidden" id="RowId" value="0" />
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    function AddItem() {
+
+        var rowId = $("#RowId").val();
+
+        // Find a <table> element with id="myTable"
+        var table = document.getElementById("orderDetailtbl");
+        var tbody = table.getElementsByTagName("tbody")[0];
+        // Create an empty <tr> element and add it to the 1st position of the table
+        var row = tbody.insertRow(0);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = "<input name=" + "OrderDetails[" + rowId +"].Price"+" asp-for=" + "OrderDetail.Price" + " class=" + "form-control" + " />";
+        cell2.innerHTML = "<input name=" + "OrderDetails[" + rowId +"].Quantity"+" asp-for=" + "OrderDetail.Quantity" + " class=" + "form-control" + " />";
+        cell3.innerHTML = "<input name=" + "OrderDetails[" + rowId +"].ItemDescription"+" asp-for=" + "OrderDetail.ItemDescription" + " class=" + "form-control" + " />";
+
+        document.getElementById("RowId").value =  parseInt(rowId) + 1;
+    }
+
+    function DeleteItem() {
+        var table = document.getElementById("orderDetailtbl");
+        var row = table.getElementsByTagName("tbody")[0].deleteRow(0);
+    }
+
+
+</script>
+
+
+

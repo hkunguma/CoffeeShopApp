@@ -1,0 +1,41 @@
+﻿@model CoffeeShop.BLL.Models.PointConvertModel
+
+@{
+    ViewData["Title"] = "Convert";
+}
+
+<h1>Convert Points</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Convert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            @*@Html.HiddenFor(m => m.ClientId)*@
+
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label"></label>
+                @Html.DropDownListFor(model => model.ClientId, (IEnumerable<SelectListItem>)ViewBag.ClientList, "--Select--", new { @class = "form-control" })
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PointQuantity" class="control-label"></label>
+                <input asp-for="PointQuantity" min="1" class="form-control" />
+                <span asp-validation-for="PointQuantity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConvertedDate" class="control-label"></label>
+                <input asp-for="ConvertedDate" class="form-control" />
+                <span asp-validation-for="ConvertedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Convert" class="btn btn-default" />
+            </div>
+        </form>
+</div>
+
+</div>
+
